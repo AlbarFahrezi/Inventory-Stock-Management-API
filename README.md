@@ -1,58 +1,275 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Inventory & Stock Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Inventory & Stock Management API adalah RESTful API yang dibangun menggunakan Laravel dan Laravel Sanctum untuk mengelola data inventory, produk, supplier, warehouse, serta transaksi stok. API ini menerapkan autentikasi berbasis token dan role (Admin & User) dengan business logic untuk menjaga konsistensi data stok.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Authentication
+- Register
+- Login
+- Logout
+- User Profile
+- Laravel Sanctum Authentication
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Role Management
+- Admin
+- User
 
-## Learning Laravel
+### Category
+- Create Category
+- Read Category
+- Update Category
+- Delete Category
+- Lihat semua Category
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Supplier
+- Create Supplier
+- Read Supplier
+- Update Supplier
+- Delete Supplier
+- Lihat Semua Supplier
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Warehouse
+- Create Warehouse
+- Read Warehouse
+- Update Warehouse
+- Delete Warehouse
+- Lihat Semua Warehouse
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Product
+- Create Product
+- Read Product
+- Update Product
+- Delete Product
 
-## Agentic Development
+### Stock Management
+- Stock In
+- Stock Out
+- Stock Adjustment
+- Stock History
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Dashboard
+- Total Products
+- Total Categories
+- Total Suppliers
+- Total Warehouses
+- Total Stock
+- Stock In Today
+- Stock Out Today
+- Stock Adjustment Today
+
+---
+
+## Business Logic
+
+- Stock tidak boleh bernilai minus.
+- Setiap perubahan stok otomatis disimpan ke Stock History.
+- Product baru memiliki stock awal = 0.
+- Hanya Admin yang dapat mengelola data master dan transaksi stok.
+- User hanya dapat melihat Dashboard, Profile, dan Stock History.
+
+---
+
+## Tech Stack
+
+- Laravel 12
+- PHP 8.3
+- MySQL
+- Laravel Sanctum
+
+---
+
+## Installation
+
+Clone repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/AlbarFahrezi/inventory-stock-management-api.git
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Masuk ke folder project
 
-## Contributing
+```bash
+cd inventory-stock-management-api
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install dependency
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Copy file environment
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Generate application key
 
-## License
+```bash
+php artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Atur database pada file `.env`
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventory_stock_management_api_new
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Jalankan migration
+
+```bash
+php artisan migrate
+```
+
+Jalankan seeder
+
+```bash
+php artisan db:seed
+```
+
+Jalankan server
+
+```bash
+php artisan serve
+```
+
+---
+
+## Default Account
+
+### Admin
+
+Email
+
+```
+admin@gmail.com
+```
+
+Password
+
+```
+password
+```
+
+### User
+
+Email
+
+```
+user@gmail.com
+```
+
+Password
+
+```
+password
+```
+
+---
+
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/register |
+| POST | /api/login |
+| GET | /api/profile |
+| POST | /api/logout |
+
+---
+
+### Dashboard
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/dashboard |
+
+---
+
+### Category
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/categories |
+| POST | /api/categories |
+| GET | /api/categories/{id} |
+| PUT | /api/categories/{id} |
+| DELETE | /api/categories/{id} |
+
+---
+
+### Supplier
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/suppliers |
+| POST | /api/suppliers |
+| GET | /api/suppliers/{id} |
+| PUT | /api/suppliers/{id} |
+| DELETE | /api/suppliers/{id} |
+
+---
+
+### Warehouse
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/warehouses |
+| POST | /api/warehouses |
+| GET | /api/warehouses/{id} |
+| PUT | /api/warehouses/{id} |
+| DELETE | /api/warehouses/{id} |
+
+---
+
+### Product
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/products |
+| POST | /api/products |
+| GET | /api/products/{id} |
+| PUT | /api/products/{id} |
+| DELETE | /api/products/{id} |
+
+---
+
+### Stock
+
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/stock-in |
+| POST | /api/stock-out |
+| POST | /api/stock-adjustment |
+| GET | /api/stock-history |
+
+---
+
+## Authentication
+
+Semua endpoint (kecuali Register dan Login) menggunakan Bearer Token.
+
+Contoh:
+
+```
+Authorization: Bearer YOUR_TOKEN
+```
+
+---
+
+## API Testing
+
+API telah diuji menggunakan Postman.
+
+---

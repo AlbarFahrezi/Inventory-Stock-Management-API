@@ -6,81 +6,104 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
-
     public function register(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:6'
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6'
         ]);
 
         $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>$request->password,
-            'role'=>'user'
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => 'user'
         ]);
-
 
         return response()->json([
-            'message'=>'Register success',
-            'data'=>$user
-        ],201);
+            'message' => 'Register success',
+            'data' => $user
+        ], 201);
     }
 
-
-
+    #[OA\Post(
+        path: "/api/login",
+        operationId: "loginUser",
+        summary: "Login User",
+        description: "Login menggunakan email dan password",
+        tags: ["Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email", "password"],
+                properties: [
+                    new OA\Property(
+                        property: "email",
+                        type: "string",
+                        example: "admin@gmail.com"
+                    ),
+                    new OA\Property(
+                        property: "password",
+                        type: "string",
+                        example: "password"
+                    )
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Login berhasil"
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Email atau password salah"
+            )
+        ]
+    )]
     public function login(Request $request)
     {
-
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required'
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
-
 
         $user = User::where(
             'email',
             $request->email
         )->first();
 
-
-        if(!$user || !Hash::check(
+        if (!$user || !Hash::check(
             $request->password,
             $user->password
-        )){
+        )) {
             return response()->json([
-                'message'=>'Invalid credentials'
-            ],401);
+                'message' => 'Invalid credentials'
+            ], 401);
         }
-
 
         $token = $user->createToken(
             'inventory-api'
         )->plainTextToken;
 
-
         return response()->json([
-            'message'=>'Login success',
-            'token'=>$token,
-            'user'=>$user
+            'message' => 'Login success',
+            'token' => $token,
+            'user' => $user
         ]);
     }
-
-
 
     public function profile(Request $request)
     {
         return response()->json([
-            'user'=>$request->user()
+            'user' => $request->user()
         ]);
     }
-
-
 
     public function logout(Request $request)
     {
@@ -88,10 +111,8 @@ class AuthController extends Controller
             ->currentAccessToken()
             ->delete();
 
-
         return response()->json([
-            'message'=>'Logout success'
+            'message' => 'Logout success'
         ]);
     }
-
 }

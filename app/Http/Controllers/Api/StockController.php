@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use OpenApi\Attributes as OA;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\StockHistory;
@@ -10,7 +11,24 @@ use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
-    // STOCK IN
+    #[OA\Post(
+        path: "/api/stock-in",
+        summary: "Stock In",
+        tags: ["Stock"],
+        security: [["bearerAuth" => []]]
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            required: ["product_id","quantity"],
+            properties: [
+                new OA\Property(property: "product_id", type: "integer", example: 1),
+                new OA\Property(property: "quantity", type: "integer", example: 10),
+                new OA\Property(property: "note", type: "string", example: "Barang masuk")
+            ]
+        )
+    )]
+    #[OA\Response(response: 200, description: "Stock In success")]
     public function stockIn(Request $request)
     {
         $request->validate([
@@ -45,7 +63,24 @@ class StockController extends Controller
         ]);
     }
 
-    // STOCK OUT
+    #[OA\Post(
+        path: "/api/stock-out",
+        summary: "Stock Out",
+        tags: ["Stock"],
+        security: [["bearerAuth" => []]]
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            required: ["product_id","quantity"],
+            properties: [
+                new OA\Property(property: "product_id", type: "integer", example: 1),
+                new OA\Property(property: "quantity", type: "integer", example: 5),
+                new OA\Property(property: "note", type: "string", example: "Barang keluar")
+            ]
+        )
+    )]
+    #[OA\Response(response: 200, description: "Stock Out success")]
     public function stockOut(Request $request)
     {
         $request->validate([
@@ -86,7 +121,24 @@ class StockController extends Controller
         ]);
     }
 
-    // STOCK ADJUSTMENT
+    #[OA\Post(
+        path: "/api/stock-adjustment",
+        summary: "Stock Adjustment",
+        tags: ["Stock"],
+        security: [["bearerAuth" => []]]
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            required: ["product_id","stock"],
+            properties: [
+                new OA\Property(property: "product_id", type: "integer", example: 1),
+                new OA\Property(property: "stock", type: "integer", example: 50),
+                new OA\Property(property: "note", type: "string", example: "Stock opname")
+            ]
+        )
+    )]
+    #[OA\Response(response: 200, description: "Stock adjusted successfully")]
     public function stockAdjustment(Request $request)
     {
         $request->validate([
@@ -121,7 +173,13 @@ class StockController extends Controller
         ]);
     }
 
-    // HISTORY
+    #[OA\Get(
+        path: "/api/stock-history",
+        summary: "Stock History",
+        tags: ["Stock"],
+        security: [["bearerAuth" => []]]
+    )]
+    #[OA\Response(response: 200, description: "List Stock History")]
     public function history()
     {
         return response()->json([

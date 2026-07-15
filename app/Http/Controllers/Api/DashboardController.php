@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use OpenApi\Attributes as OA;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
@@ -9,9 +10,22 @@ use App\Models\Supplier;
 use App\Models\Warehouse;
 use App\Models\StockHistory;
 
-
+#[OA\Tag(
+    name: "Dashboard",
+    description: "Dashboard Summary"
+)]
 class DashboardController extends Controller
 {
+    #[OA\Get(
+        path: "/api/dashboard",
+        summary: "Get Dashboard Summary",
+        tags: ["Dashboard"],
+        security: [["sanctum" => []]]
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Dashboard data retrieved successfully"
+    )]
     public function index()
     {
         return response()->json([

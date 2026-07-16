@@ -16,7 +16,8 @@ class WarehouseController extends Controller
     #[OA\Get(
         path: "/api/warehouses",
         summary: "Get All Warehouses",
-        tags: ["Warehouse"]
+        tags: ["Warehouse"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -32,7 +33,8 @@ class WarehouseController extends Controller
     #[OA\Post(
         path: "/api/warehouses",
         summary: "Create Warehouse",
-        tags: ["Warehouse"]
+        tags: ["Warehouse"],
+        security: [["sanctum" => []]]
     )]
     #[OA\RequestBody(
         required: true,
@@ -64,27 +66,28 @@ class WarehouseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|string',
-            'location'=>'nullable|string',
-            'description'=>'nullable|string'
+            'name' => 'required|string',
+            'location' => 'nullable|string',
+            'description' => 'nullable|string'
         ]);
 
         $warehouse = Warehouse::create([
-            'name'=>$request->name,
-            'location'=>$request->location,
-            'description'=>$request->description
+            'name' => $request->name,
+            'location' => $request->location,
+            'description' => $request->description
         ]);
 
         return response()->json([
-            'message'=>'Warehouse created successfully',
-            'data'=>$warehouse
-        ],201);
+            'message' => 'Warehouse created successfully',
+            'data' => $warehouse
+        ], 201);
     }
 
     #[OA\Get(
         path: "/api/warehouses/{id}",
         summary: "Get Warehouse Detail",
-        tags: ["Warehouse"]
+        tags: ["Warehouse"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -99,14 +102,15 @@ class WarehouseController extends Controller
     public function show(Warehouse $warehouse)
     {
         return response()->json([
-            'data'=>$warehouse
+            'data' => $warehouse
         ]);
     }
 
     #[OA\Put(
         path: "/api/warehouses/{id}",
         summary: "Update Warehouse",
-        tags: ["Warehouse"]
+        tags: ["Warehouse"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -131,21 +135,22 @@ class WarehouseController extends Controller
     public function update(Request $request, Warehouse $warehouse)
     {
         $warehouse->update([
-            'name'=>$request->name,
-            'location'=>$request->location,
-            'description'=>$request->description
+            'name' => $request->name,
+            'location' => $request->location,
+            'description' => $request->description
         ]);
 
         return response()->json([
-            'message'=>'Warehouse updated successfully',
-            'data'=>$warehouse
+            'message' => 'Warehouse updated successfully',
+            'data' => $warehouse
         ]);
     }
 
     #[OA\Delete(
         path: "/api/warehouses/{id}",
         summary: "Delete Warehouse",
-        tags: ["Warehouse"]
+        tags: ["Warehouse"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -162,7 +167,7 @@ class WarehouseController extends Controller
         $warehouse->delete();
 
         return response()->json([
-            'message'=>'Warehouse deleted successfully'
+            'message' => 'Warehouse deleted successfully'
         ]);
     }
 }

@@ -16,7 +16,8 @@ class SupplierController extends Controller
     #[OA\Get(
         path: "/api/suppliers",
         summary: "Get All Suppliers",
-        tags: ["Supplier"]
+        tags: ["Supplier"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -32,7 +33,8 @@ class SupplierController extends Controller
     #[OA\Post(
         path: "/api/suppliers",
         summary: "Create Supplier",
-        tags: ["Supplier"]
+        tags: ["Supplier"],
+        security: [["sanctum" => []]]
     )]
     #[OA\RequestBody(
         required: true,
@@ -84,7 +86,8 @@ class SupplierController extends Controller
     #[OA\Get(
         path: "/api/suppliers/{id}",
         summary: "Get Supplier Detail",
-        tags: ["Supplier"]
+        tags: ["Supplier"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -106,7 +109,8 @@ class SupplierController extends Controller
     #[OA\Put(
         path: "/api/suppliers/{id}",
         summary: "Update Supplier",
-        tags: ["Supplier"]
+        tags: ["Supplier"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -157,7 +161,8 @@ class SupplierController extends Controller
     #[OA\Delete(
         path: "/api/suppliers/{id}",
         summary: "Delete Supplier",
-        tags: ["Supplier"]
+        tags: ["Supplier"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",

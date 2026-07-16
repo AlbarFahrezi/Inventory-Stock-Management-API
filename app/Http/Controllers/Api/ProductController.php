@@ -16,7 +16,8 @@ class ProductController extends Controller
     #[OA\Get(
         path: "/api/products",
         summary: "Get All Products",
-        tags: ["Product"]
+        tags: ["Product"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -38,7 +39,8 @@ class ProductController extends Controller
     #[OA\Post(
         path: "/api/products",
         summary: "Create Product",
-        tags: ["Product"]
+        tags: ["Product"],
+        security: [["sanctum" => []]]
     )]
     #[OA\RequestBody(
         required: true,
@@ -98,7 +100,8 @@ class ProductController extends Controller
     #[OA\Get(
         path: "/api/products/{id}",
         summary: "Get Product Detail",
-        tags: ["Product"]
+        tags: ["Product"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -124,7 +127,8 @@ class ProductController extends Controller
     #[OA\Put(
         path: "/api/products/{id}",
         summary: "Update Product",
-        tags: ["Product"]
+        tags: ["Product"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -163,7 +167,8 @@ class ProductController extends Controller
     #[OA\Delete(
         path: "/api/products/{id}",
         summary: "Delete Product",
-        tags: ["Product"]
+        tags: ["Product"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",

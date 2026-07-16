@@ -12,13 +12,57 @@
         }
     ],
     "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register User",
+                "description": "Register a new user account",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register success"
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Login User",
-                "description": "Login menggunakan email dan password",
+                "description": "Login using email and password",
                 "operationId": "loginUser",
                 "requestBody": {
                     "required": true,
@@ -36,7 +80,7 @@
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "password"
+                                        "example": "password123"
                                     }
                                 },
                                 "type": "object"
@@ -46,12 +90,58 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Login berhasil"
+                        "description": "Login success"
                     },
                     "401": {
-                        "description": "Email atau password salah"
+                        "description": "Invalid credentials"
                     }
                 }
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get Profile",
+                "description": "Get authenticated user profile",
+                "operationId": "profileUser",
+                "responses": {
+                    "200": {
+                        "description": "Profile retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout User",
+                "description": "Logout authenticated user",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "Logout success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/categories": {
@@ -65,7 +155,12 @@
                     "200": {
                         "description": "List of categories"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -224,7 +319,12 @@
                     "200": {
                         "description": "List of products"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -285,7 +385,12 @@
                     "201": {
                         "description": "Product created successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/products/{id}": {
@@ -309,7 +414,12 @@
                     "200": {
                         "description": "Product detail"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -356,7 +466,12 @@
                     "200": {
                         "description": "Product updated successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -378,7 +493,12 @@
                     "200": {
                         "description": "Product deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/stock-in": {
@@ -423,7 +543,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "sanctum": []
                     }
                 ]
             }
@@ -470,7 +590,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "sanctum": []
                     }
                 ]
             }
@@ -517,7 +637,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "sanctum": []
                     }
                 ]
             }
@@ -536,7 +656,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "sanctum": []
                     }
                 ]
             }
@@ -552,7 +672,12 @@
                     "200": {
                         "description": "List of suppliers"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -591,7 +716,12 @@
                     "201": {
                         "description": "Supplier created successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/suppliers/{id}": {
@@ -615,7 +745,12 @@
                     "200": {
                         "description": "Supplier detail"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -661,7 +796,12 @@
                     "200": {
                         "description": "Supplier updated successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -683,7 +823,12 @@
                     "200": {
                         "description": "Supplier deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/warehouses": {
@@ -697,7 +842,12 @@
                     "200": {
                         "description": "List of warehouses"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -736,7 +886,12 @@
                     "201": {
                         "description": "Warehouse created successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/warehouses/{id}": {
@@ -760,7 +915,12 @@
                     "200": {
                         "description": "Warehouse detail"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -806,7 +966,12 @@
                     "200": {
                         "description": "Warehouse updated successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -828,11 +993,29 @@
                     "200": {
                         "description": "Warehouse deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
     "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication Management"
+        },
         {
             "name": "Category",
             "description": "Category Management"
@@ -846,20 +1029,16 @@
             "description": "Product Management"
         },
         {
+            "name": "Stock",
+            "description": "Stock Management"
+        },
+        {
             "name": "Supplier",
             "description": "Supplier Management"
         },
         {
             "name": "Warehouse",
             "description": "Warehouse Management"
-        },
-        {
-            "name": "Authentication",
-            "description": "Authentication"
-        },
-        {
-            "name": "Stock",
-            "description": "Stock"
         }
     ]
 }

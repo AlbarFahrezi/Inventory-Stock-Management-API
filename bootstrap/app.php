@@ -18,6 +18,18 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
 
+        // Agar API mengembalikan JSON ketika belum login
+        $middleware->redirectGuestsTo(function (Request $request) {
+
+            if ($request->expectsJson()) {
+                abort(response()->json([
+                    'message' => 'Unauthenticated.'
+                ], 401));
+            }
+
+            return null;
+        });
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
 

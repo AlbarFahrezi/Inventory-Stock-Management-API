@@ -14,10 +14,13 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     #[OA\Get(
-        path: "/api/categories",
-        summary: "Get All Categories",
-        tags: ["Category"]
-    )]
+    path: "/api/categories",
+    summary: "Get All Categories",
+    tags: ["Category"],
+    security: [["sanctum" => []]]
+)]
+        
+    
     #[OA\Response(
         response: 200,
         description: "List of categories"

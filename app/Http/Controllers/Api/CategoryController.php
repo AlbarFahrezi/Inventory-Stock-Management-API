@@ -14,13 +14,11 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     #[OA\Get(
-    path: "/api/categories",
-    summary: "Get All Categories",
-    tags: ["Category"],
-    security: [["sanctum" => []]]
-)]
-        
-    
+        path: "/api/categories",
+        summary: "Get All Categories",
+        tags: ["Category"],
+        security: [["sanctum" => []]]
+    )]
     #[OA\Response(
         response: 200,
         description: "List of categories"
@@ -35,15 +33,24 @@ class CategoryController extends Controller
     #[OA\Post(
         path: "/api/categories",
         summary: "Create Category",
-        tags: ["Category"]
+        tags: ["Category"],
+        security: [["sanctum" => []]]
     )]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(
             required: ["name"],
             properties: [
-                new OA\Property(property: "name", type: "string", example: "Electronics"),
-                new OA\Property(property: "description", type: "string", example: "Electronic Products")
+                new OA\Property(
+                    property: "name",
+                    type: "string",
+                    example: "Electronics"
+                ),
+                new OA\Property(
+                    property: "description",
+                    type: "string",
+                    example: "Electronic Products"
+                )
             ]
         )
     )]
@@ -72,7 +79,8 @@ class CategoryController extends Controller
     #[OA\Get(
         path: "/api/categories/{id}",
         summary: "Get Category Detail",
-        tags: ["Category"]
+        tags: ["Category"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -94,7 +102,8 @@ class CategoryController extends Controller
     #[OA\Put(
         path: "/api/categories/{id}",
         summary: "Update Category",
-        tags: ["Category"]
+        tags: ["Category"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",
@@ -107,8 +116,16 @@ class CategoryController extends Controller
         content: new OA\JsonContent(
             required: ["name"],
             properties: [
-                new OA\Property(property: "name", type: "string", example: "Electronic"),
-                new OA\Property(property: "description", type: "string", example: "Updated Description")
+                new OA\Property(
+                    property: "name",
+                    type: "string",
+                    example: "Electronic"
+                ),
+                new OA\Property(
+                    property: "description",
+                    type: "string",
+                    example: "Updated Description"
+                )
             ]
         )
     )]
@@ -137,7 +154,8 @@ class CategoryController extends Controller
     #[OA\Delete(
         path: "/api/categories/{id}",
         summary: "Delete Category",
-        tags: ["Category"]
+        tags: ["Category"],
+        security: [["sanctum" => []]]
     )]
     #[OA\Parameter(
         name: "id",

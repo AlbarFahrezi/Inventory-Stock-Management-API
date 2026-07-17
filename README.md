@@ -1,56 +1,107 @@
-# Inventory & Stock Management API
+# 📦 Inventory Stock Management API
 
-Inventory & Stock Management API adalah RESTful API yang dibangun menggunakan Laravel dan Laravel Sanctum untuk mengelola data inventory, produk, supplier, warehouse, serta transaksi stok. API ini menerapkan autentikasi berbasis token dan role (Admin & User) dengan business logic untuk menjaga konsistensi data stok.
+RESTful API built with **Laravel 12**, **Laravel Sanctum**, **Swagger (OpenAPI)**, and **MySQL** for managing inventory, products, suppliers, warehouses, and stock transactions with role-based authentication.
 
 ---
 
-## Features
+## 🛠 Tech Stack
 
-### Authentication
+![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql)
+![Sanctum](https://img.shields.io/badge/Auth-Sanctum-success?style=for-the-badge)
+![Swagger](https://img.shields.io/badge/API-Swagger-85EA2D?style=for-the-badge&logo=swagger)
+
+---
+
+# 📑 Table of Contents
+
+- Features
+- Role Access
+- Business Logic
+- Inventory Flow
+- Authentication Flow
+- Tech Stack
+- Installation
+- Default Account
+- Swagger Documentation
+- API Endpoints
+- Authentication
+- API Testing
+- Future Improvements
+- Author
+
+---
+
+# ✨ Features
+
+## Authentication
+
 - Register
 - Login
 - Logout
 - User Profile
 - Laravel Sanctum Authentication
 
-### Role Management
+---
+
+## Role Management
+
 - Admin
 - User
 
-### Category
+---
+
+## Category
+
 - Create Category
 - Read Category
 - Update Category
 - Delete Category
-- Lihat semua Category
+- View All Categories
 
-### Supplier
+---
+
+## Supplier
+
 - Create Supplier
 - Read Supplier
 - Update Supplier
 - Delete Supplier
-- Lihat Semua Supplier
+- View All Suppliers
 
-### Warehouse
+---
+
+## Warehouse
+
 - Create Warehouse
 - Read Warehouse
 - Update Warehouse
 - Delete Warehouse
-- Lihat Semua Warehouse
+- View All Warehouses
 
-### Product
+---
+
+## Product
+
 - Create Product
 - Read Product
 - Update Product
 - Delete Product
 
-### Stock Management
+---
+
+## Stock Management
+
 - Stock In
 - Stock Out
 - Stock Adjustment
 - Stock History
 
-### Dashboard
+---
+
+## Dashboard
+
 - Total Products
 - Total Categories
 - Total Suppliers
@@ -62,46 +113,119 @@ Inventory & Stock Management API adalah RESTful API yang dibangun menggunakan La
 
 ---
 
-## Business Logic
+# 👥 Role Access
 
-- Stock tidak boleh bernilai minus.
-- Setiap perubahan stok otomatis disimpan ke Stock History.
-- Product baru memiliki stock awal = 0.
-- Hanya Admin yang dapat mengelola data master dan transaksi stok.
-- User hanya dapat melihat Dashboard, Profile, dan Stock History.
+| Feature | Admin | User |
+|---------|:----:|:----:|
+| Dashboard | ✅ | ✅ |
+| Profile | ✅ | ✅ |
+| Stock History | ✅ | ✅ |
+| Category CRUD | ✅ | ❌ |
+| Supplier CRUD | ✅ | ❌ |
+| Warehouse CRUD | ✅ | ❌ |
+| Product CRUD | ✅ | ❌ |
+| Stock In | ✅ | ❌ |
+| Stock Out | ✅ | ❌ |
+| Stock Adjustment | ✅ | ❌ |
 
 ---
 
-## Tech Stack
+# 📌 Business Logic
+
+- Stock cannot be negative.
+- Every stock transaction is automatically stored in Stock History.
+- Newly created products have an initial stock of **0**.
+- Only **Admin** can manage master data and stock transactions.
+- **User** can only access Dashboard, Profile, and Stock History.
+
+---
+
+# 📦 Inventory Flow
+
+```text
+Category
+      │
+      ▼
+Supplier
+      │
+      ▼
+Warehouse
+      │
+      ▼
+Create Product
+      │
+      ▼
+Initial Stock = 0
+      │
+      ▼
+Stock In
+      │
+      ▼
+Stock Out
+      │
+      ▼
+Stock Adjustment
+      │
+      ▼
+Stock History
+      │
+      ▼
+Dashboard
+```
+
+---
+
+# 🔐 Authentication Flow
+
+```text
+Register
+    │
+    ▼
+Login
+    │
+    ▼
+Generate Bearer Token
+    │
+    ▼
+Access Protected API
+    │
+    ▼
+Logout
+```
+
+---
+
+# 💻 Tech Stack
 
 - Laravel 12
 - PHP 8.3
 - MySQL
 - Laravel Sanctum
+- Swagger OpenAPI (L5-Swagger)
 
 ---
 
-## Installation
+# 🚀 Installation
 
 Clone repository
 
 ```bash
-git clone https://github.com/AlbarFahrezi/inventory-stock-management-api.git
+git clone https://github.com/AlbarFahrezi/Inventory-Stock-Management-API.git
 ```
 
-Masuk ke folder project
+Go to project directory
 
 ```bash
-cd inventory-stock-management-api
+cd Inventory-Stock-Management-API
 ```
 
-Install dependency
+Install dependencies
 
 ```bash
 composer install
 ```
 
-Copy file environment
+Copy environment file
 
 ```bash
 cp .env.example .env
@@ -113,7 +237,7 @@ Generate application key
 php artisan key:generate
 ```
 
-Atur database pada file `.env`
+Configure database in `.env`
 
 ```env
 DB_CONNECTION=mysql
@@ -124,19 +248,25 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Jalankan migration
+Run migration
 
 ```bash
 php artisan migrate
 ```
 
-Jalankan seeder
+Run database seeder
 
 ```bash
 php artisan db:seed
 ```
 
-Jalankan server
+Generate Swagger Documentation
+
+```bash
+php artisan l5-swagger:generate
+```
+
+Run server
 
 ```bash
 php artisan serve
@@ -144,9 +274,9 @@ php artisan serve
 
 ---
 
-## Default Account
+# 👤 Default Account
 
-### Admin
+## Admin
 
 Email
 
@@ -160,7 +290,9 @@ Password
 password
 ```
 
-### User
+---
+
+## User
 
 Email
 
@@ -176,9 +308,36 @@ password
 
 ---
 
-## API Endpoints
+# 📖 Swagger Documentation
 
-### Authentication
+This project includes **Swagger OpenAPI Documentation**.
+
+Generate documentation
+
+```bash
+php artisan l5-swagger:generate
+```
+
+Open Swagger UI
+
+```
+http://127.0.0.1:8000/api/documentation
+```
+
+Swagger Features
+
+- Interactive API Documentation
+- Bearer Token Authentication
+- Request Body Example
+- Response Example
+- Endpoint Testing
+- OpenAPI 3 Specification
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
 
 | Method | Endpoint |
 |---------|----------|
@@ -189,7 +348,7 @@ password
 
 ---
 
-### Dashboard
+## Dashboard
 
 | Method | Endpoint |
 |---------|----------|
@@ -197,7 +356,7 @@ password
 
 ---
 
-### Category
+## Category
 
 | Method | Endpoint |
 |---------|----------|
@@ -209,7 +368,7 @@ password
 
 ---
 
-### Supplier
+## Supplier
 
 | Method | Endpoint |
 |---------|----------|
@@ -221,7 +380,7 @@ password
 
 ---
 
-### Warehouse
+## Warehouse
 
 | Method | Endpoint |
 |---------|----------|
@@ -233,7 +392,7 @@ password
 
 ---
 
-### Product
+## Product
 
 | Method | Endpoint |
 |---------|----------|
@@ -245,7 +404,7 @@ password
 
 ---
 
-### Stock
+## Stock
 
 | Method | Endpoint |
 |---------|----------|
@@ -256,20 +415,76 @@ password
 
 ---
 
-## Authentication
+# 🔑 Authentication
 
-Semua endpoint (kecuali Register dan Login) menggunakan Bearer Token.
+All endpoints except **Register** and **Login** require a Bearer Token.
 
-Contoh:
+Example
 
 ```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
 
 ---
 
-## API Testing
+# 📄 Response Example
 
-API telah diuji menggunakan Postman.
+```json
+{
+  "message": "Login success",
+  "token": "1|xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "user": {
+    "id": 1,
+    "name": "Administrator",
+    "email": "admin@gmail.com",
+    "role": "admin"
+  }
+}
+```
 
 ---
+
+# 🧪 API Testing
+
+The API has been tested using:
+
+- ✅ Swagger UI
+- ✅ Postman
+
+All endpoints have been successfully tested, including:
+
+- Authentication
+- Category CRUD
+- Supplier CRUD
+- Warehouse CRUD
+- Product CRUD
+- Stock Management
+- Dashboard
+- Role Authorization
+
+---
+
+# 🚀 Future Improvements
+
+- Export Excel
+- Export PDF
+- Barcode Scanner
+- Pagination
+- Search & Filter
+- Unit Testing
+- Docker Support
+- CI/CD GitHub Actions
+
+---
+
+# 👨‍💻 Author
+
+**Albar Fahrezi**
+
+GitHub
+
+https://github.com/AlbarFahrezi
+
+---
+
+⭐ If you find this project useful, feel free to give it a star on GitHub.

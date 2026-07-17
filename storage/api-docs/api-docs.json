@@ -195,7 +195,12 @@
                     "201": {
                         "description": "Category created successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/categories/{id}": {
@@ -219,7 +224,12 @@
                     "200": {
                         "description": "Category detail"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -264,7 +274,12 @@
                     "200": {
                         "description": "Category updated successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -286,7 +301,12 @@
                     "200": {
                         "description": "Category deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/dashboard": {
